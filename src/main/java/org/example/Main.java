@@ -62,14 +62,11 @@ public class Main {
         String res = "";
         for (int n = start; n <= end; n++) {
             if (n % 2 == 0) {
-                if (n != end) {
-                    res += n + " ";
-                } else {
-                    res += n;
-                }
+                res += n + " ";
             }
+
         }
-        return res;
+        return res.trim();
     }
 
     public static int findMax(int[] arr) {

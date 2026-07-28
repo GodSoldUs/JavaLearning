@@ -18,3 +18,21 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+tasks.register<Test>("task1.1"){
+    group = "Test"
+    description = "Run all tests"
+    testClassesDirs = sourceSets.test.get().output.classesDirs
+    classpath = sourceSets.test.get().runtimeClasspath
+    useJUnitPlatform()
+    finalizedBy("task1.2")
+}
+
+tasks.register<Test>("task1.2"){
+    group = "Test"
+    doLast{
+        println("Test run is over")
+    }
+
+
+}
