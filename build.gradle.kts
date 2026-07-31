@@ -13,6 +13,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("org.assertj:assertj-core:3.27.7")
 }
 
 tasks.test {
@@ -35,4 +36,14 @@ tasks.register<Test>("task1.2"){
     }
 
 
+}
+
+tasks.register<Test>("lesson3") {
+    group = "Test"
+    description = "Run test lesson3"
+    testClassesDirs = sourceSets.test.get().output.classesDirs
+    classpath = sourceSets.test.get().runtimeClasspath
+    useJUnitPlatform {
+        includeTags ("Lesson3")
+    }
 }

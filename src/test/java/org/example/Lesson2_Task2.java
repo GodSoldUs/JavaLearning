@@ -1,103 +1,159 @@
 package org.example;
 
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 class Lesson2_Task2 {
 
-    static int randomInt() {
-        return new Random().nextInt(1,20);
+    private static String[] arrayWithBug(Random random) {
+        int size = random.nextInt(10) + 1;
+        String[] arr = new String[size];
+        int bugIndex = random.nextInt(size);
+        for (int i = 0; i < size; i++) {
+            if (i == bugIndex) {
+                arr[i] = random.nextBoolean() ? "Bug" : "bug";
+            } else {
+                arr[i] = "word" + i;
+            }
+        }
+        return arr;
     }
 
-    @RepeatedTest(value = 3)
-    void isEvenTest() {
-        String res = (Main.isEven(5))? "TEST PASSED": "TEST FAILED";
-        System.out.println(res);
+    private static String[] arrayWithoutBug(Random random) {
+        int size = random.nextInt(10) + 1;
+        String[] arr = new String[size];
+        for (int i = 0; i < size; i++) {
+            arr[i] = "word" + i;
+        }
+        return arr;
     }
 
+    private static int[] randomIntArray(Random random) {
+        int size = random.nextInt(10) + 1;
+        int[] arr = new int[size];
+        for (int i = 0; i < size; i++) {
+            arr[i] = random.nextInt(-101, 101);
+        }
+        return arr;
+    }
+
+    @Tag("Lesson3")
     @ParameterizedTest
-    @CsvFileSource(resources = "/checkAccess.csv")
-    void checkAccessTest() {
-        assertEquals("Allowed", Main.checkAccess(19));
-        assertEquals("Denied", Main.checkAccess(18));
+    @ValueSource(ints = {2, 4, 6, 8, 100, -2, 8, 44, 102, 16})
+    void isEvenTest(int num) {
+        assertThat(Main.isEven(num)).isTrue();
     }
 
-    @RepeatedTest(value = 3)
+    @Tag("Lesson3")
+    @ParameterizedTest
+    @CsvFileSource(resources = "/checkAccess.csv", delimiter = ';')
+    void checkAccessTest(int age, String decision) {
+        assertThat(Main.checkAccess(age)).isEqualTo(decision);
+    }
+
+    @Tag("Lesson3")
+    @RepeatedTest(value = 10)
     void isPositiveTest() {
-        int n = new Random().nextInt(0,100);
-        String res = (Main.isEven(n))? "TEST PASSED": "TEST FAILED";
-        System.out.println(res);
+        int n = new Random().nextInt(1, 100);
+        assertThat(Main.isPositive(n)).isTrue();
+
     }
 
+    @Tag("Lesson3")
     @ParameterizedTest
     @CsvFileSource(resources = "/getGradeData.csv", numLinesToSkip = 1, delimiter = ';')
     void getGradeTest(int score, String expectedGrade) {
-        String res = (Main.getGrade(score).equals(expectedGrade))? "TEST PASSED": "TEST FAILED";
-        System.out.println(res);
+        assertThat(Main.getGrade(score)).isEqualTo(expectedGrade);
     }
 
-    @RepeatedTest(5)
+    @Tag("Lesson3")
+    @RepeatedTest(10)
     void blastOffTest() {
-        var n = new Random().nextInt(6);
-        String res = (Main.blastOff(n).equals("5 4 3 2 1 Поехали!"))? "TEST PASSED": "TEST FAILED";
-        System.out.println(res);
+        var n = new Random().nextInt(1, 11);
+        assertThat(Main.blastOff(n)).contains(String.valueOf(n), "Поехали!");
+
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3})
-    void sumToNTest(int value) {
-        String res = (Main.sumToN(value) == 5)? "TEST PASSED": "TEST FAILED";
-        System.out.println(res);
+    @Tag("Lesson3")
+    @RepeatedTest(10)
+    void sumToNTest() {
+        int n = new Random().nextInt(100);
+        assertThat(Main.sumToN(n)).isGreaterThanOrEqualTo(n);
     }
 
-    @Test
+    @Tag("Lesson3")
+    @RepeatedTest(10)
     void hasBugTest() {
-        String res = (Main.hasBug(new String[]{"ok", "BUG", "done"}))? "TEST PASSED": "TEST FAILED";
-        System.out.println(res);
+        Random random = new Random();
+        String[] arrayWithBug = arrayWithBug(random);
+        String[] arrayWithoutBug = arrayWithoutBug(random);
+        assertThat(Main.hasBug(arrayWithBug)).isTrue();
+        assertThat(Main.hasBug(arrayWithoutBug)).isFalse();
+
     }
 
-    @Test
+    @Tag("Lesson3")
+    @RepeatedTest(10)
     void getEvenInRangeTest() {
-        String res = (Main.getEvenInRange(2, 6).equals("2 4 6")) ? "TEST PASSED" : "TEST FAILED";
-        System.out.println(res);
+        assertThat(Main.getEvenInRange(2, 6)).isEqualTo("2 4 6");
+
     }
 
-    @Test
+    @Tag("Lesson3")
+    @RepeatedTest(10)
     void findMaxTest() {
-        String res = (Main.findMax(new int[]{1, 5, 9, 3}) == 9)? "TEST PASSED" : "TEST FAILED";
-        System.out.println(res);
+        Random random = new Random();
+        int[] arr = randomIntArray(random);
+        assertThat(Main.findMax(arr)).isEqualTo(Arrays.stream(arr).max().getAsInt());
     }
 
-    @Test
+    @Tag("Lesson3")
+    @RepeatedTest(10)
     void reverseTest() {
-        String res = (Arrays.equals(
-                Main.reverse(new String[]{"One", "Two", "Zero"}),
-                new String[]{"One", "Two", "Zero"}))?"TEST PASSED" : "TEST FAILED";
-        System.out.println(res);
+        Random random = new Random();
+        String[] arr = arrayWithBug(random);
+        String[] expected = arr.clone();
+        Collections.reverse(Arrays.asList(expected));
+        assertThat(Main.reverse(arr)).containsExactly(expected);
+
     }
 
-    @Test
+    @Tag("Lesson3")
+    @RepeatedTest(10)
     void calcAverageTest() {
-        String res = (Main.calcAverage(List.of(1, 2, 3, 4, 5)) == 3)?"TEST PASSED" : "TEST FAILED";
-        System.out.println(res);
+        Random random = new Random();
+        int[] randomArray = randomIntArray(random);
+        List<Integer> list = Arrays.stream(randomArray)
+                .boxed()
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        assertThat(Main.calcAverage(list)).isEqualTo(list.stream()
+                .mapToInt(Integer::intValue)
+                .average()
+                .orElse(0.0)
+        );
+
     }
 
+    @Tag("Lesson3")
     @RepeatedTest(5)
     void removeSpecificNameTest() {
-        List<String> result = Main.removeSpecificName(
-                Arrays.asList("Ann", "Bob", "Ann"),
-                "Ann"
-        );
-        String res = (List.of("Bob", "Ann").equals(result))?"TEST PASSED" : "TEST FAILED";
-        System.out.println(res);
+        Random random = new Random();
+        List<String> list = new ArrayList<>(Arrays.asList(arrayWithBug(random)));
+        List<String> expected = new ArrayList<>(list);
+        expected.remove("bug");
+        assertThat(Main.removeSpecificName(list, "bug")).containsExactlyElementsOf(expected);
     }
+
 }

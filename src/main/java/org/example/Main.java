@@ -90,12 +90,12 @@ public class Main {
         return newArr;
     }
 
-    public static int calcAverage(List<Integer> list) {
+    public static double calcAverage(List<Integer> list) {
         int sum = 0;
         for (int el : list) {
             sum += el;
         }
-        return sum/list.size();
+        return (double) sum /list.size();
     }
 
     public static List<String> removeSpecificName(List<String> list, String nameToRemove) {
@@ -104,13 +104,25 @@ public class Main {
         return res;
     }
 
+    public static String makeCapitalLetters(String text) {
+        return text.toUpperCase();
+    }
 
+    public static List<Integer> reduce(List<Integer> list, int size) {
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            result.add(list.get(i));
+        }
+        return result;
+    }
 
+    public static Boolean isStringContains(String text, String subText) {
+        return !text.contains(subText);
+    }
 
-
-
-
-
+    public static String greeting(String name) {
+        return "Hello, " + name.trim() + "!";
+    }
 
 
 
@@ -118,6 +130,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        System.out.println(getEvenInRange(2, 6));
+        System.out.println(isStringContains("Hello, name", "name"));
     }
 }
