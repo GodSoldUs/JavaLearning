@@ -14,9 +14,22 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation("org.assertj:assertj-core:3.27.7")
+    implementation("io.rest-assured:rest-assured:5.5.6")
+    implementation("org.seleniumhq.selenium:selenium-java:4.47.0")
 }
 
 tasks.test {
+    useJUnitPlatform()
+}
+
+tasks.register<Test>("allTests") {
+    doLast {
+        println("Test run is over")
+    }
+    group = "test"
+    description = "Run all tests."
+    testClassesDirs = sourceSets.test.get().output.classesDirs
+    classpath = sourceSets.test.get().runtimeClasspath
     useJUnitPlatform()
 }
 
