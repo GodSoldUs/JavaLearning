@@ -2,7 +2,6 @@ package lesson4task2;
 
 import io.restassured.response.Response;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import rest.assertions.BasicApiAssert;
 import rest.endpoints.GoodsApi;

@@ -33,12 +33,14 @@ public class Utils {
 
     public static final SelenideElement itemInBucket =
             $x("//div[@id='cart-items']"
-                    + "//div[contains(@class, 'cart-item')]");
+                    + "/div[contains(@class, 'cart-item')]");
 
 
     public static final SelenideElement makeOrder =
             $x("//button[@id='makeOrder']");
 
+    public static final SelenideElement closeBucket =
+     $x("//span[@id='close-modal']");
 
 
 
