@@ -1,5 +1,6 @@
 package lesson4task2;
 
+import DTO.ProductRequestDto;
 import io.restassured.response.Response;
 
 import org.junit.jupiter.api.*;
@@ -30,7 +31,10 @@ public class DeleteGoodsTest {
     @Test
     void deleteGoodTest() {
 
-        DTO.ProductRequestDto product = randGoodAndPrice(new Random());
+        DTO.ProductRequestDto product = new ProductRequestDto(
+                config.ConfigProvider.CONFIG.startName(),
+                config.ConfigProvider.CONFIG.startPrice()
+        );
         Response responsePost = goodsApi.createGood(product);
 
         BasicApiAssert.assertThat(responsePost)

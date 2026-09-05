@@ -7,6 +7,7 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 import rest.assertions.BasicApiAssert;
 import rest.endpoints.GoodsApi;
+import config.ConfigProvider;
 
 
 import java.util.Map;
@@ -18,6 +19,11 @@ import static helpMethods.TestDataFactory.randGoodAndPrice;
 @DisplayName("[POST]/goods/add")
 @Tag("Api-test")
 public class CreateGoodsTests {
+
+    @BeforeAll
+    static void setup() {
+        ConfigProvider.printConfigParams();
+    }
 
 
     @BeforeEach
@@ -53,7 +59,11 @@ public class CreateGoodsTests {
     @Test
     void addGoodTest() {
 
-        DTO.ProductRequestDto product = randGoodAndPrice(new Random());
+        DTO.ProductRequestDto product = new ProductRequestDto(
+                ConfigProvider.CONFIG.startName(),
+                ConfigProvider.CONFIG.startPrice()
+        );
+
         Response response = goodsApi.createGood(product);
 
         BasicApiAssert.assertThat(response)

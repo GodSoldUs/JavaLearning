@@ -17,6 +17,7 @@ dependencies {
     implementation("io.rest-assured:rest-assured:5.5.6")
     implementation("org.projectlombok:lombok:1.18.46")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.22.1")
+    implementation("org.aeonbits.owner:owner:1.0.12")
 }
 
 tasks.test {

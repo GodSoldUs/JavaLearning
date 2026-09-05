@@ -48,7 +48,10 @@ public class UpdateGoodsTests {
     @DisplayName("PATCH /goods/id HappyFlow both")
     @Test
     void updateGoodsTest() {
-        DTO.ProductRequestDto product = randGoodAndPrice(new Random());
+        DTO.ProductRequestDto product = new ProductRequestDto(
+                config.ConfigProvider.CONFIG.startName(),
+                config.ConfigProvider.CONFIG.startPrice()
+        );
         Response responsePost = goodsApi.createGood(product);
 
         BasicApiAssert.assertThat(responsePost)

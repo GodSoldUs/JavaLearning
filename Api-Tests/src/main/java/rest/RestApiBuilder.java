@@ -1,20 +1,22 @@
 package rest;
 
+import config.ConfigProvider;
 import io.restassured.http.ContentType;import io.restassured.specification.RequestSpecification;
 
 import static io.restassured.RestAssured.given;
 import static rest.endpoints.Urls.GOODS;
 
+
 public class RestApiBuilder {
     RequestSpecification spec;
 
-    private static final String
+    /*private static final String
             BASIC_URL = "http://localhost:8080",
             LOGIN = "admin",
-            PASSWORD = "secret123";
+            PASSWORD = "secret123";*/
 
     public RestApiBuilder() {
-        spec = given().baseUri(BASIC_URL)
+        spec = given().baseUri(ConfigProvider.CONFIG.Url())
                 .basePath(GOODS)
                 .log().all()
                 .relaxedHTTPSValidation();
@@ -35,7 +37,7 @@ public class RestApiBuilder {
     }
 
     public static RestApiBuilder getBuilder() {
-        return new RestApiBuilder().addAuth(LOGIN, PASSWORD);
+        return new RestApiBuilder().addAuth(ConfigProvider.CONFIG.login(), ConfigProvider.CONFIG.password());
     }
 
     public static RestApiBuilder getBuilderWithoutAuth() {

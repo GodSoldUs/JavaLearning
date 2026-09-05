@@ -1,3 +1,4 @@
+import com.codeborne.selenide.Configuration;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 
@@ -7,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import config.ConfigProvider;
 
 import java.time.Duration;
 import java.util.Random;
@@ -18,10 +20,16 @@ public class Lesson6_1 {
 
     String name = "name" + new Random().nextInt();
 
+    @BeforeAll
+    static void printConfig() {
+        ConfigProvider.printConfigParams();
+        Configuration.timeout = ConfigProvider.CONFIG.timeout();
+    }
+
     @BeforeEach
     void setup() {
         driver = new ChromeDriver();
-        driver.get("http://localhost:8080");
+        driver.get(ConfigProvider.CONFIG.Url());
     }
 
     @DisplayName("Task1.1")

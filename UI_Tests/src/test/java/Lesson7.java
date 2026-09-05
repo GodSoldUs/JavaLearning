@@ -1,3 +1,6 @@
+import DTO.ProductRequestDto;
+import com.codeborne.selenide.Config;
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.DragAndDropOptions;
 import com.codeborne.selenide.SelenideElement;
 import io.restassured.response.Response;
@@ -12,6 +15,10 @@ import static com.Utils.*;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static helpMethods.TestDataFactory.randGoodAndPrice;
+import config.ConfigProvider;
+
+
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
 
@@ -26,11 +33,17 @@ public class Lesson7 {
 
     @BeforeAll
     static void setup() {
+        ConfigProvider.printConfigParams();
+        Configuration.timeout =
+                ConfigProvider.CONFIG.timeout();
 
-        DTO.ProductRequestDto product = randGoodAndPrice(new Random());
+        DTO.ProductRequestDto product = new ProductRequestDto(
+                ConfigProvider.CONFIG.startName(),
+                ConfigProvider.CONFIG.startPrice()
+        );
         Response response = goods.createGood(product);
         createdId = Integer.parseInt(response.jsonPath().getString("data.id"));
-        open("http://localhost:8080");
+        open(ConfigProvider.CONFIG.Url());
 
     }
 
