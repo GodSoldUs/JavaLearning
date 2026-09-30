@@ -13,7 +13,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testImplementation("org.assertj:assertj-core:3.27.7")
+    implementation("org.assertj:assertj-core:3.27.7")
     implementation("org.seleniumhq.selenium:selenium-java:4.47.0")
     implementation("com.codeborne:selenide:7.18.0")
     implementation("io.rest-assured:rest-assured:5.5.6")
