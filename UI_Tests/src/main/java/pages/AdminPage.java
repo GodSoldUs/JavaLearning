@@ -30,8 +30,8 @@ public class AdminPage {
         return new MainPage();
     }
 
-    public CartPageAssert.AdminPageAssert check() {
-        return new CartPageAssert.AdminPageAssert(this);
+    public AdminPageAssert check() {
+        return new AdminPageAssert(this);
     }
 
 }

@@ -2,6 +2,7 @@ package pages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Condition.visible;
@@ -24,13 +25,14 @@ public class MainPage {
 
 
 
-    public MainPage inputProductCount(int index, Keys keys) {
+   /* public MainPage inputProductCount(int index, Keys keys) {
         productCountInputList.get(index).clear();
         productCountInputList.get(index)
                 .sendKeys(keys);
 
         return this;
     }
+
 
     public MainPage inputProductCount(int index, String text) {
         productCountInputList.get(index).clear();
@@ -43,75 +45,65 @@ public class MainPage {
         addToCardButtonList.get(index)
                 .click();
         return this;
-    }
+    }*/
 
 
 
 
-
+    @Step("Нажать на кнопку Администрирование")
     public AuthPage clickAdminButton() {
         adminBtn.click();
         return new AuthPage();
     }
 
 
-
-
-    public MainPage addProductToCartById(int productId) {
-        getAddToCartButtonById(productId).click();
-        return this;
-    }
-
-
-
+    @Step("Получить карточку товара по ид")
     public SelenideElement getProductCardById(int productId) {
         return $x("//div[@data-id='" + productId + "']");
     }
 
-    /*public SelenideElement getProductCard(int productId) {
-        return getProductCardById(productId);
-    }*/
 
+    @Step("Получить карточку товара по ид геттер")
     public SelenideElement getAddToCartButtonById(int productId) {
         SelenideElement product = getProductCardById(productId);
         return product.$x(".//button[@data-action='add-to-cart']");
     }
 
+    @Step("Нажать добавть в корзину")
     public MainPage addToCartButtonByIdClick(int productId) {
         getAddToCartButtonById(productId).click();
         return this;
     }
 
-
-
+    @Step("Нажать добавть в геттер")
     public SelenideElement getProductQuantityInputById(int productId) {
         return $x("//input[@type='number' and @id='q-" + productId + "']");
     }
 
-    public MainPage setProductQuantity(int productId, int quantity) {
+    /*public MainPage setProductQuantity(int productId, int quantity) {
         SelenideElement input = getProductQuantityInputById(productId);
         input.clear();
         input.sendKeys(String.valueOf(quantity));
         return this;
-    }
+    }*/
 
 
-    public String getProductNameById(int productId) {
+    /*public String getProductNameById(int productId) {
         SelenideElement product = getProductCardById(productId);
         return product
                 .$x(".//h4")
                 .shouldBe(visible)
                 .getText();
-    }
+    }*/
 
-    public int getProductPrice(int productId) {
+    /*public int getProductPrice(int productId) {
         SelenideElement product = getProductCardById(productId);
         String price = product
                 .$x(".//button[@data-action='add-to-cart']")
                 .getAttribute("data-price");
 
         return Integer.parseInt(price);
-    }
+    }*/
 
 
 
@@ -139,7 +131,7 @@ public class MainPage {
 //        }
 //    }
 
-
+    @Step("Нажать кнопку корзина")
     public CartPage cartBtnClick() {
         cartBtn.click();
         return new CartPage(this);
@@ -149,7 +141,7 @@ public class MainPage {
         return this;
     }
 
-
+    @Step("Перейти к проверкам главной страницы")
     public MainPageAssert check() {
         return new MainPageAssert(this);
     }

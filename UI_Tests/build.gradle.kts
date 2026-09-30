@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("io.qameta.allure") version "2.12.0"
 }
 
 group = "org.example"
@@ -17,6 +18,7 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-java:4.47.0")
     implementation("com.codeborne:selenide:7.18.0")
     implementation("io.rest-assured:rest-assured:5.5.6")
+    implementation("io.qameta.allure:allure-selenide:2.29.0")
     implementation("org.aeonbits.owner:owner:1.0.12")
     testImplementation(project(":Api-Tests"))
 }

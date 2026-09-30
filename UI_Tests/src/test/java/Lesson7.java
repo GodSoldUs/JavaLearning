@@ -23,7 +23,7 @@ import config.ConfigProvider;
 
 
 @Tag("UI-test")
-public class Lesson7 {
+public class Lesson7 extends BaseTest {
 
     static GoodsApi goods = new GoodsApi();
     private static int createdId;

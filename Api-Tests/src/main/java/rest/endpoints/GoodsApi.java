@@ -1,5 +1,6 @@
 package rest.endpoints;
 
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
 
@@ -11,19 +12,20 @@ public class GoodsApi {
 
 
 
-
+    @Step("Создать товар '{createdProduct}'")
     public Response createGood(DTO.ProductRequestDto createdProduct) {
         return getBuilder().setContentJSON().getSpec()
                 .body(createdProduct)
                 .post(ADD);
     }
-
+    @Step("Создать товар '{createdProduct}' без авторизации")
     public Response createGoodWithoutAuth(DTO.ProductRequestDto createdProduct) {
         return getBuilderWithoutAuth().setContentJSON().getSpec()
                 .body(createdProduct)
                 .post(ADD);
     }
 
+    @Step("Создать товар не валидное тнло запроса ")
     public Response createGoodBadRequest(Object requestBody) {
         return getBuilder()
                 .setContentJSON()
@@ -33,7 +35,7 @@ public class GoodsApi {
     }
 
 
-
+    @Step("Получить список товаров")
     public Response getGoodsList(int page, int size) {
         return getBuilder().getSpec()
                 .queryParam("size", size)
@@ -41,7 +43,7 @@ public class GoodsApi {
                 .get(LIST);
     }
 
-
+    @Step("Получить товар по id = '{id}'")
     public Response getGoodFromId(int id) {
         return getBuilder()
                 .getSpec()
@@ -49,6 +51,7 @@ public class GoodsApi {
                 .get(ID);
     }
 
+    @Step("Получить товар по id = '{id}'")
     public Response getGoodFromIdString(String id) {
         return getBuilder()
                 .getSpec()
@@ -56,7 +59,7 @@ public class GoodsApi {
                 .get(ID);
     }
 
-
+    @Step("Удалить товар по id = '{id}'")
     public Response deleteGood(int id) {
         return getBuilder()
                 .getSpec()
@@ -64,6 +67,7 @@ public class GoodsApi {
                 .delete(ID);
     }
 
+    @Step("Удалить товар по id = '{id}'")
     public Response deleteGoodString(String id) {
         return getBuilder()
                 .getSpec()
@@ -71,6 +75,7 @@ public class GoodsApi {
                 .delete(ID);
     }
 
+    @Step("Удалить товар по id = '{id}' без авторизации")
     public Response deleteGoodWithoutAuth(int id) {
         return getBuilderWithoutAuth()
                 .getSpec()
@@ -78,6 +83,7 @@ public class GoodsApi {
                 .delete(ID);
     }
 
+    @Step("Обновить товар по id = '{id}'")
     public Response updateGood(int id, Object requestBody) {
         return getBuilder()
                 .setContentJSON()
@@ -87,6 +93,7 @@ public class GoodsApi {
                 .patch(ID);
     }
 
+    @Step("Обновить товар по id = '{id}' без аввторизации")
     public Response updateGoodWithoutAuth(int id, Object requestBody) {
         return getBuilderWithoutAuth()
                 .setContentJSON()
@@ -96,6 +103,7 @@ public class GoodsApi {
                 .patch(ID);
     }
 
+    @Step("Обновить товар по id = '{id}'")
     public Response updateGoodStringId(String id, Object requestBody) {
         return getBuilder()
                 .setContentJSON()
@@ -105,6 +113,7 @@ public class GoodsApi {
                 .patch(ID);
     }
 
+    @Step("Обновить товар по id = '{id}' без тела запроса")
     public Response updateGoodWithoutBody(int id) {
         return getBuilder()
                 .setContentJSON()

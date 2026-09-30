@@ -15,6 +15,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Tag("UI-test")
 public class Lesson8_Tests extends BaseTest {
 
 

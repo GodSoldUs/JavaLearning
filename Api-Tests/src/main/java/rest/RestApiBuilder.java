@@ -1,6 +1,7 @@
 package rest;
 
 import config.ConfigProvider;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.http.ContentType;import io.restassured.specification.RequestSpecification;
 
 import static io.restassured.RestAssured.given;
@@ -17,6 +18,7 @@ public class RestApiBuilder {
 
     public RestApiBuilder() {
         spec = given().baseUri(ConfigProvider.CONFIG.Url())
+                .filter(new AllureRestAssured())
                 .basePath(GOODS)
                 .log().all()
                 .relaxedHTTPSValidation();

@@ -2,6 +2,7 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 
+import io.qameta.allure.Step;
 import org.assertj.core.api.AbstractAssert;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
@@ -16,31 +17,32 @@ public class CartPageAssert extends AbstractAssert<CartPageAssert, CartPage> {
         super(actual, CartPageAssert.class);
     }
 
+    @Step("Проверка видимости кнопки оформить заказ")
     public CartPageAssert makeOrderBtnIsVisible() {
         actual.makeOrderBtn
                 .should(visible);
         return this;
     }
 
+    @Step("Проверка наличия продукта по названию '{name}' в корзине")
     public CartPageAssert cartContainsProduct(String name) {
        actual.productInCartList.
                filterBy(text(name))
                .shouldHave(sizeGreaterThan(0));
-
-
         return this;
     }
 
-
+    @Step("Проверка общей цены >= '{maxPrice}' в корзине")
     public CartPageAssert totalPriceIsLessThanOrEqual(int maxPrice) {
         int actualPrice = Integer.parseInt(actual.totalPriceInCart.getText());
 
         assertThat(actualPrice)
                 .as("Total price")
-                .isLessThanOrEqualTo(actualPrice);
+                .isLessThanOrEqualTo(maxPrice);
         return this;
     }
 
+    @Step("Проверка общей цены = '{expectedPrice}' в корзине")
     public CartPageAssert totalPriceIsEqual(double expectedPrice) {
         double actualPrice = Double.parseDouble(actual.totalPriceInCart.getText());
 
@@ -54,20 +56,5 @@ public class CartPageAssert extends AbstractAssert<CartPageAssert, CartPage> {
         return actual;
     }
 
-    public static class AdminPageAssert extends AbstractAssert<AdminPageAssert, AdminPage> {
 
-        public AdminPageAssert(AdminPage actual) {
-            super(actual, AdminPageAssert.class);
-        }
-
-        public AdminPageAssert notificationIs(String expectedText) {
-            SelenideElement toast = $x("//div[contains(@class, 'toast')]");
-            toast.shouldBe(visible).shouldHave(text(expectedText));
-            return this;
-        }
-
-        public AdminPage page() {
-            return actual;
-        }
-    }
 }
