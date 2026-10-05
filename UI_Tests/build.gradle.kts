@@ -21,6 +21,7 @@ dependencies {
     implementation("io.qameta.allure:allure-selenide:2.29.0")
     implementation("org.aeonbits.owner:owner:1.0.12")
     testImplementation(project(":Api-Tests"))
+    implementation(project(":common"))
 }
 
 tasks.test {
@@ -39,3 +40,5 @@ tasks.register<Test>("allUITests") {
         includeTags("UI-test")
     }
 }
+
+

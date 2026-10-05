@@ -20,6 +20,7 @@ dependencies {
     implementation("io.qameta.allure:allure-rest-assured:2.24.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.22.1")
     implementation("org.aeonbits.owner:owner:1.0.12")
+    implementation(project(":common"))
 }
 
 
